@@ -1,5 +1,6 @@
 import { Schedule } from "./Schedule_entities";
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -8,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { hash } from "bcryptjs";
 
 @Entity("users")
 export class User {
@@ -19,16 +21,18 @@ export class User {
   email: string;
   @Column({ nullable: false, default: false })
   admin: boolean;
-  @Column({ length: 120, nullable: false })
+  @Column()
   password: string;
-
+  @BeforeInsert()
+  async hashPassword(): Promise<void> {
+    this.password = await hash(this.password, 8);
+  }
   @OneToMany((type) => Schedule, (User) => User)
   schedules: Schedule;
-
-  @CreateDateColumn()
+  @CreateDateColumn({ nullable: false })
   createdAt: Date;
-  @UpdateDateColumn()
-  updateAt: Date;
-  @DeleteDateColumn({ type: `timestamp`, nullable: true })
+  @UpdateDateColumn({ nullable: false })
+  updatedAt: Date;
+  @DeleteDateColumn({ type: `text`, nullable: true })
   deletedAt: Date;
 }

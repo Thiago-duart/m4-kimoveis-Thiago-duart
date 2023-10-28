@@ -4,8 +4,13 @@ import { Schedule } from "./Schedule_entities";
 import {
   Column,
   CreateDateColumn,
+  Decimal128,
+  DeepPartial,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -19,18 +24,19 @@ export class RealEstate {
   @Column({ nullable: false, default: false })
   sold: boolean;
   @Column({ nullable: false, default: 0 })
-  value: number;
+  value: Number;
   @Column({ nullable: false })
   size: number;
   @OneToMany((type) => Schedule, (RealEstate) => RealEstate)
-  schedules: Schedule;
-  @CreateDateColumn()
+  schedules: Schedule[];
+  @CreateDateColumn({ nullable: false })
   createdAt: Date;
-  @UpdateDateColumn()
-  updateAt: Date;
+  @UpdateDateColumn({ nullable: false })
+  updatedAt: Date;
   @OneToOne((type) => Address, (RealEstate) => RealEstate)
   @JoinColumn()
   addressId: Address;
-  @OneToMany((type) => Category, (RealEstate) => RealEstate)
+  @ManyToOne((type) => Category, (RealEstate) => RealEstate)
+  @JoinColumn([{ name: "categoryId" }])
   categoryId: Category[];
 }
