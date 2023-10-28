@@ -3,9 +3,9 @@ import { z } from "zod";
 export const userSchema = z.object({
   id: z.number().positive(),
   name: z.string().min(3).max(45),
-  email: z.string().min(1).max(45),
-  admin: z.boolean(),
-  password: z.string().min(8).max(120),
+  email: z.string().email().min(1).max(45),
+  admin: z.boolean().optional().default(false),
+  password: z.string().min(1).max(120),
   createdAt: z.date(),
   updatedAt: z.date(),
   deletedAt: z.date(),
