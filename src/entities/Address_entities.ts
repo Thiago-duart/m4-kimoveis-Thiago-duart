@@ -3,7 +3,7 @@ import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("addresses")
 export class Address {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("increment")
   id: number;
   @Column({ length: 45, nullable: false })
   street: string;
@@ -13,7 +13,7 @@ export class Address {
   number: number;
   @Column({ length: 20, nullable: false })
   city: string;
-  @Column({ length: 20, nullable: false })
+  @Column({ length: 2, nullable: false })
   state: string;
   @OneToOne((type) => RealEstate, (Address) => Address)
   realEstates: RealEstate;
