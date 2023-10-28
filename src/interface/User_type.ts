@@ -7,6 +7,6 @@ import {
 
 export type userType = z.infer<typeof userSchema>;
 
-export type UserResponseType = z.infer<typeof userResponseSchema>;
+export type UserResponseType = Partial<z.infer<typeof userResponseSchema>>;
 
 export type userCreate = z.infer<typeof createuserSchema>;

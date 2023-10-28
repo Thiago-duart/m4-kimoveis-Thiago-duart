@@ -1,24 +1,25 @@
+import { UserResponseType } from "./../interface/User_type";
 import { AppDataSource } from "../data-source";
 import { User } from "../entities";
-import { UserResponseType, userCreate, userType } from "../interface/User_type";
+import { userCreate } from "../interface/User_type";
 
 export class UsersService {
-  async createUser(userData: userCreate) {
+  async createUser(userData: userCreate): Promise<UserResponseType> {
     const repo = AppDataSource.getRepository(User);
 
-    const newUser: User = await repo.save(userData);
+    const createUser: User = await repo.save(repo.create(userData));
 
-    const { password, ...responseUserFormated } = newUser;
+    const { password, ...responseUserFormated } = createUser;
 
     return responseUserFormated;
   }
 
-  async findUsers() {
+  async findUsers(): Promise<Array<UserResponseType>> {
     const repo = AppDataSource.getRepository(User);
 
     const findUsers: User[] = await repo.find();
 
-    const userResponseFormated: Array<Omit<User, "password">> = findUsers.map(
+    const userResponseFormated: Array<UserResponseType> = findUsers.map(
       (user) => {
         const { password, ...userWithoutPassword } = user;
         return userWithoutPassword;
