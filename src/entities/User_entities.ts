@@ -29,9 +29,9 @@ export class User {
   }
   @OneToMany((type) => Schedule, (User) => User)
   schedules: Schedule;
-  @CreateDateColumn({ nullable: false })
+  @CreateDateColumn({ type: "date", nullable: false })
   createdAt: Date;
-  @UpdateDateColumn({ nullable: false })
+  @UpdateDateColumn({ type: "date", nullable: false })
   updatedAt: Date;
   @DeleteDateColumn({ type: `text`, nullable: true })
   deletedAt: Date;

@@ -26,6 +26,7 @@ export class UsersService {
     const userResponseFormated: Array<UserResponseType> = findUsers.map(
       (user) => {
         const { password, ...userWithoutPassword } = user;
+
         return userWithoutPassword;
       }
     );
