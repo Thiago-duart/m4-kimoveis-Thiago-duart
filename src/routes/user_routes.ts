@@ -12,6 +12,6 @@ userRoutes.post(
   userExistsByEmail,
   userController.createUser
 );
-userRoutes.get("/");
+userRoutes.get("/", userController.findUsers);
 userRoutes.patch("/:id");
 userRoutes.delete("/:id");

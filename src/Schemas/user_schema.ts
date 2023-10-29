@@ -23,3 +23,13 @@ export const createuserSchema = userSchema.omit({
   deletedAt: true,
   schedule: true,
 });
+
+export const singInUserSchema = userSchema.omit({
+  id: true,
+  name: true,
+  admin: true,
+  createdAt: true,
+  updatedAt: true,
+  deletedAt: true,
+  schedule: true,
+});

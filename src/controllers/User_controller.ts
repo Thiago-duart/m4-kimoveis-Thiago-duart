@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UserResponseType, userCreate } from "../interface/User_type";
 import { UsersService } from "../services/User_service";
+import { tokenType } from "../interface/auth_type";
 const userService = new UsersService();
 export class UsersControlle {
   async createUser(req: Request, res: Response) {
@@ -24,4 +25,8 @@ export class UsersControlle {
   }
   updateUser(req: Request, res: Response) {}
   deleteUser(req: Request, res: Response) {}
+  async login(req: Request, res: Response) {
+    const response: tokenType = await userService.login(req.body);
+    res.status(200).json(response);
+  }
 }
