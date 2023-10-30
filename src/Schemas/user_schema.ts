@@ -33,3 +33,8 @@ export const singInUserSchema = userSchema.omit({
   deletedAt: true,
   schedule: true,
 });
+export const updateUserSchema = z.object({
+  name: z.string().min(3).max(45).optional(),
+  email: z.string().email().min(1).max(45).optional(),
+  password: z.string().min(1).max(120).optional(),
+});

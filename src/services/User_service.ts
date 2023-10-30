@@ -1,4 +1,9 @@
-import { UserResponseType } from "./../interface/User_type";
+import { Response } from "express";
+import {
+  UserResponseType,
+  localsType,
+  userUpdate,
+} from "./../interface/User_type";
 import { AppDataSource } from "../data-source";
 import { User } from "../entities";
 import { userCreate } from "../interface/User_type";
@@ -34,8 +39,35 @@ export class UsersService {
     return userResponseFormated;
   }
 
-  updateUser() {}
-  deleteUser() {}
+  async updateUser(
+    userId: number,
+    userData: Partial<User>,
+    locals: localsType
+  ) {
+    const repo = AppDataSource.getRepository(User);
+    const { admin, ...dataUpdate } = userData;
+
+    if (locals.admin) {
+      await repo.update(userId, dataUpdate);
+      const response: User[] | null = await repo.findBy({ id: userId });
+      const { password, ...user } = response[0];
+      return user;
+    }
+
+    if (+locals.sub === userId) {
+      await repo.update(+locals.sub, dataUpdate);
+      const response: User[] | null = await repo.findBy({ id: userId });
+      const { password, ...user } = response[0];
+      return user;
+    } else {
+      throw new AppError("Insufficient permission", 403);
+    }
+  }
+  async deleteUser(userId: number) {
+    const repo = AppDataSource.getRepository(User);
+    const query = await repo.softDelete(userId);
+    return query;
+  }
   async login(data: singInUserType) {
     const repo = AppDataSource.getRepository(User);
 

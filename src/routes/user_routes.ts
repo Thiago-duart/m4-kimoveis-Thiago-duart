@@ -2,7 +2,10 @@ import { Router } from "express";
 import { UsersControlle } from "../controllers/User_controller";
 import { createuserSchema } from "../Schemas/user_schema";
 import { validateBody } from "../middlewares/validateBody_middleware";
-import { userExistsByEmail } from "../middlewares/userExists_middleware";
+import {
+  userExistsByEmail,
+  userExistsById,
+} from "../middlewares/userExists_middleware";
 import { verifyToken } from "../middlewares/verifyToken_middleware";
 import { verifyPermission } from "../middlewares/verifyPermission_middleware";
 
@@ -15,5 +18,16 @@ userRoutes.post(
   userController.createUser
 );
 userRoutes.get("/", verifyToken, verifyPermission, userController.findUsers);
-userRoutes.patch("/:id");
-userRoutes.delete("/:id");
+userRoutes.patch(
+  "/:id",
+  verifyToken,
+  userExistsById,
+  userController.updateUser
+);
+userRoutes.delete(
+  "/:id",
+  verifyToken,
+  userExistsById,
+  verifyPermission,
+  userController.deleteUser
+);
