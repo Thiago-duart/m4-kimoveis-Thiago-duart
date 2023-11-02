@@ -23,20 +23,26 @@ export class RealEstate {
   id: number;
   @Column({ nullable: false, default: false })
   sold: boolean;
-  @Column({ nullable: false, default: 0 })
+  @Column({
+    type: "decimal",
+    precision: 12,
+    scale: 2,
+    nullable: false,
+    default: 0,
+  })
   value: Number;
   @Column({ nullable: false })
   size: number;
   @OneToMany((type) => Schedule, (RealEstate) => RealEstate)
   schedules: Schedule[];
-  @CreateDateColumn({ nullable: false })
+  @CreateDateColumn({ type: "date", nullable: false })
   createdAt: Date;
-  @UpdateDateColumn({ nullable: false })
+  @UpdateDateColumn({ type: "date", nullable: false })
   updatedAt: Date;
   @OneToOne((type) => Address, (RealEstate) => RealEstate)
   @JoinColumn()
   addressId: Address;
   @ManyToOne((type) => Category, (RealEstate) => RealEstate)
   @JoinColumn([{ name: "categoryId" }])
-  categoryId: Category[];
+  categoryId: Category;
 }

@@ -8,5 +8,5 @@ export class Category {
   @Column({ length: 45, unique: true, nullable: false })
   name: string;
   @OneToMany((type) => RealEstate, (Category) => Category)
-  realEstates: RealEstate;
+  realEstates: RealEstate[];
 }

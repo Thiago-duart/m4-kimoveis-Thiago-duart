@@ -6,6 +6,7 @@ const userService = new UsersService();
 export class UsersControlle {
   async createUser(req: Request, res: Response) {
     const userData: userCreate = req.body;
+
     try {
       const response: UserResponseType = await userService.createUser(userData);
 

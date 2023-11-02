@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { CategoryControler } from "../controllers/Categories_controller";
-import { categoryByNameExists } from "../middlewares/categoryExists_middleware";
+import {
+  categoryByIdExists,
+  categoryByNameExists,
+} from "../middlewares/categoryExists_middleware";
 import { verifyPermission } from "../middlewares/verifyPermission_middleware";
 import { verifyToken } from "../middlewares/verifyToken_middleware";
 import { validateBody } from "../middlewares/validateBody_middleware";
@@ -19,3 +22,8 @@ categoryRouter.post(
   categoryControler.createCategory
 );
 categoryRouter.get("/", categoryControler.findCategories);
+categoryRouter.get(
+  "/:id/realEstate",
+  categoryByIdExists,
+  categoryControler.findRealEstatesByCategory
+);

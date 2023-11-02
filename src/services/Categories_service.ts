@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Category } from "../entities";
+import { Category, RealEstate } from "../entities";
 import { AppDataSource } from "../data-source";
 import { CreateCategoryType } from "../interface/categories_type";
 
@@ -18,7 +18,21 @@ export class CategoryService {
 
     return response;
   }
-  async findRealEstatesByCategory(req: Request, res: Response) {
-    const repo = AppDataSource.getRepository(Category);
+  async findRealEstatesByCategory(categoryId: number) {
+    const category = AppDataSource.getRepository(Category);
+    const realEstate = AppDataSource.getRepository(RealEstate);
+    const id: number = Number(categoryId);
+
+    const categoryResponse = await category.findOneBy({ id: id });
+
+    const realEstateResponse = await realEstate.findBy({
+      categoryId: !categoryResponse,
+    });
+
+    return {
+      id: id,
+      name: categoryResponse?.name,
+      realEstate: [...realEstateResponse],
+    };
   }
 }

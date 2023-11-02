@@ -18,3 +18,19 @@ export const categoryByNameExists = async (
   }
   return next();
 };
+export const categoryByIdExists = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const repo = AppDataSource.getRepository(Category);
+
+  const categoryId: number = +req.params.id;
+
+  const response: Category[] = await repo.findBy({ id: categoryId });
+
+  if (response.length !== 1) {
+    throw new AppError("Category not found", 404);
+  }
+  return next();
+};
