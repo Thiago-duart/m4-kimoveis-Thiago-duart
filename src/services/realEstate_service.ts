@@ -12,24 +12,24 @@ export class RealEstateService {
     const repoCategory = AppDataSource.getRepository(Category);
 
     const findCategory = await repoCategory.findBy({
-      id: Number(realEstateData.categoryId),
+      id: Number(realEstateData.category),
     });
 
     const createAddress: Address = await repoAddress.save(
       repoAddress.create(anddressData)
     );
 
-    realEstateData.addressId = createAddress;
-    realEstateData.categoryId = findCategory[0];
+    realEstateData.address = createAddress;
+    realEstateData.category = findCategory[0];
 
     const createRealEstate = await repoRealEstate.save(
       repoRealEstate.create(realEstateData)
     );
-    const { addressId, categoryId, ...payload } = createRealEstate;
+    const { address, category, ...payload } = createRealEstate;
 
     const response = {
-      address: { ...addressId },
-      category: { ...categoryId },
+      address: { ...address },
+      category: { ...category },
       ...payload,
     };
 

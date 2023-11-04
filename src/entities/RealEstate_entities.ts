@@ -33,16 +33,16 @@ export class RealEstate {
   value: Number;
   @Column({ nullable: false })
   size: number;
-  @OneToMany((type) => Schedule, (RealEstate) => RealEstate)
+  @OneToMany((type) => Schedule, (RealEstate) => RealEstate.realEstate)
   schedules: Schedule[];
   @CreateDateColumn({ type: "date", nullable: false })
   createdAt: Date;
   @UpdateDateColumn({ type: "date", nullable: false })
   updatedAt: Date;
-  @OneToOne((type) => Address, (RealEstate) => RealEstate)
+  @OneToOne((type) => Address, (RealEstate) => RealEstate.realEstates)
   @JoinColumn()
-  addressId: Address;
-  @ManyToOne((type) => Category, (RealEstate) => RealEstate)
-  @JoinColumn([{ name: "categoryId" }])
-  categoryId: Category;
+  address: Address;
+  @ManyToOne((type) => Category, (RealEstate) => RealEstate.realEstates)
+  @JoinColumn([{ name: "category" }])
+  category: Category;
 }

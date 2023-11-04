@@ -15,6 +15,6 @@ export class Address {
   city: string;
   @Column({ length: 2, nullable: false })
   state: string;
-  @OneToOne((type) => RealEstate, (Address) => Address)
+  @OneToOne((type) => RealEstate, (Address) => Address.address)
   realEstates: RealEstate;
 }

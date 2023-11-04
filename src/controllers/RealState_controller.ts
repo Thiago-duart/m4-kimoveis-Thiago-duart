@@ -17,7 +17,7 @@ export class RealEstateController {
     const realEstateData = {
       value: realEstate.value,
       size: realEstate.size,
-      categoryId: realEstate.categoryId,
+      category: realEstate.categoryId,
     };
 
     try {

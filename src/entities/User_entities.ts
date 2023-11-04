@@ -27,8 +27,8 @@ export class User {
   async hashPassword(): Promise<void> {
     this.password = await hash(this.password, 8);
   }
-  @OneToMany((type) => Schedule, (User) => User)
-  schedules: Schedule;
+  @OneToMany((type) => Schedule, (User) => User.user)
+  schedules: Schedule[];
   @CreateDateColumn({ type: "date", nullable: false })
   createdAt: Date;
   @UpdateDateColumn({ type: "date", nullable: false })

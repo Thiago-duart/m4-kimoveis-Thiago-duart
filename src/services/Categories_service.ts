@@ -26,7 +26,7 @@ export class CategoryService {
     const categoryResponse = await category.findOneBy({ id: id });
 
     const realEstateResponse = await realEstate.findBy({
-      categoryId: !categoryResponse,
+      category: !categoryResponse,
     });
 
     return {
